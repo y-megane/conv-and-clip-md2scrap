@@ -1,0 +1,13 @@
+{
+  "name": "ConvClip-markdown2scrap",
+  "description": "Convert selected Markdown text to Scrapbox syntax and copy it to the clipboard.",
+  "version": "1.0",
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "manifest_version": 2,
+  "permissions": ["clipboardRead", "contextMenus"],
+  "icons": {
+    "16": "16.png"
+  }
+}

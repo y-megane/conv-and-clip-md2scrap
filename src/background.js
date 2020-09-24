@@ -1,3 +1,5 @@
+import { md2scrap, scrap2md } from "./converter.js";
+
 //Add context menu (Right click menu)
 chrome.contextMenus.create({
   title: "Markdown to Scrapbox",
@@ -47,16 +49,4 @@ function clipScrap2Md(info, tab) {
 
     copyToClipboard(convertedText);
   };
-}
-
-//Convert markdown text to Scrapbox syntax
-//TODO
-function md2scrap(mdText) {
-  return "md2scrap";
-}
-
-//Convert Scrapbox text to markdown syntax
-//TODO
-function scrap2md(mdText) {
-  return "scrap2md";
 }

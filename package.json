@@ -1,0 +1,25 @@
+{
+  "name": "conv-and-clip-md2scrap",
+  "version": "1.0.0",
+  "description": "Chrome extension : Convert selected Markdown text to Scrapbox syntax and copy it to the clipboard.",
+  "main": "background.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^26.4.2"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/y-megane/conv-and-clip-md2scrap.git"
+  },
+  "author": "y-megane",
+  "bugs": {
+    "url": "https://github.com/y-megane/conv-and-clip-md2scrap/issues"
+  },
+  "homepage": "https://github.com/y-megane/conv-and-clip-md2scrap#readme"
+}

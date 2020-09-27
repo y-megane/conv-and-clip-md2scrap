@@ -1,4 +1,5 @@
-import { md2scrap, scrap2md } from "./converter.js";
+import { md2scrap } from "./md2scrap.js";
+import { scrap2md } from "./scrap2md.js";
 
 //Add context menu (Right click menu)
 chrome.contextMenus.create({

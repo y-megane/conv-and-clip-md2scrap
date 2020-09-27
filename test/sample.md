@@ -64,7 +64,14 @@ This is sample markdown text.
 
 # Code Block
 
-```hello.java
+```js:hello.js
+function greet() {
+  console.log("Hello");
+}
+```
 
-
+```js
+function greet() {
+  console.log("Hello");
+}
 ```

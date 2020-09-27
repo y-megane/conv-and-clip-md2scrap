@@ -16,11 +16,12 @@ function md2scrap(mdText) {
         scrapArray.push(" " + line);
       }
     } else {
-      if (line.match(/```(.+)/)) {
+      if (line.match(/```(.*)/)) {
         isCodeblock = true;
-        scrapArray.push(line.replace(/```(.+)/, "code:$1"));
+        scrapArray.push(line.replace(/```(.+:)?(.+)?/, "code:$2"));
+      } else {
+        scrapArray.push(replace(line));
       }
-      scrapArray.push(replace(line));
     }
   }
   return scrapArray.join("\n");
@@ -61,16 +62,13 @@ function replace(mdText) {
   out = out.replace(/^(  ){1}[0-9]\. (\S.+)/, "  $2");
   out = out.replace(/^[0-9]\. (\S.+)/, " $1");
 
-  //code block
-
-  //escape
-
   //image
 
   //link
 
-  //other
   //horizontal line
+
+  //escape
 
   return out;
 }

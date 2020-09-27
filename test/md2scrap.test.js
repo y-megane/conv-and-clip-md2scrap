@@ -110,3 +110,56 @@ describe("Ordered list", () => {
   level2`);
   });
 });
+
+describe("Code block", () => {
+  test("Code block without extention/file name", () => {
+    expect(
+      md2scrap(`
+\`\`\`
+function greet() {
+  console.log("Hello");
+}
+\`\`\`
+`)
+    ).toBe(`
+code:text
+ function greet() {
+   console.log("Hello");
+ }
+`);
+  });
+
+  test("Code block with language name", () => {
+    expect(
+      md2scrap(`
+\`\`\`js
+function greet() {
+  console.log("Hello");
+}
+\`\`\`
+`)
+    ).toBe(`
+code:js
+ function greet() {
+   console.log("Hello");
+ }
+`);
+  });
+
+  test("Code block with file name", () => {
+    expect(
+      md2scrap(`
+\`\`\`js:hello.js
+function greet() {
+  console.log("Hello");
+}
+\`\`\`
+`)
+    ).toBe(`
+code:hello.js
+ function greet() {
+   console.log("Hello");
+ }
+`);
+  });
+});

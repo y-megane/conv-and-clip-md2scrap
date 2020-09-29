@@ -4,27 +4,44 @@ function md2scrap(mdText) {
   const textArray = mdText.split(/\r\n|\r|\n/);
   // console.log(textArray);
   let scrapArray = [];
-  let isCodeblock = false;
+  let isInCodeblock = false;
 
   for (const line of textArray) {
     // console.log(line);
     // console.log(replace(line));
-    if (isCodeblock) {
-      if (line.match(/^```/)) {
-        isCodeblock = false;
+    if (isInCodeblock) {
+      if (isEndOfCodeBlock(line)) {
+        isInCodeblock = false;
       } else {
         scrapArray.push(" " + line);
       }
     } else {
-      if (line.match(/```(.*)/)) {
-        isCodeblock = true;
-        scrapArray.push(line.replace(/```(.+:)?(.+)?/, "code:$2"));
+      if (isStartOfCodeBlock(line)) {
+        isInCodeblock = true;
+        scrapArray.push(replaceCodeBlock(line));
       } else {
         scrapArray.push(replace(line));
       }
     }
   }
   return scrapArray.join("\n");
+}
+
+function isStartOfCodeBlock(line) {
+  return line.match(/^```(.*)/);
+}
+
+function isEndOfCodeBlock(line) {
+  return line.match(/^```/);
+}
+
+function replaceCodeBlock(mdText) {
+  // Code block WITHOUT extention or file name.
+  if (mdText.match(/^```$/)) {
+    return "code:text";
+  }
+  // Code block WITH extention or file name.
+  return mdText.replace(/```(.+:)?(.+)?/, "code:$2");
 }
 
 function replace(mdText) {

@@ -112,7 +112,7 @@ describe("Ordered list", () => {
 });
 
 describe("Code block", () => {
-  test("Code block without extention/file name", () => {
+  test("Code block without extention or file name", () => {
     expect(
       md2scrap(`
 \`\`\`
@@ -161,5 +161,11 @@ code:hello.js
    console.log("Hello");
  }
 `);
+  });
+
+  describe("image", () => {
+    test("[url]", () => {
+      expect(md2scrap("[url]")).toBe("!{xxxx}");
+    });
   });
 });

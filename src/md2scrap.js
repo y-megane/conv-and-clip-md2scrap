@@ -86,6 +86,8 @@ function replace(mdText) {
   out = out.replace(/\[(.+)\]\((\S+)( "\S+")?\)/, "[$1 $2]");
 
   //horizontal line
+  out = out.replace(/^---$/, "[/icons/hr.icon]");
+  out = out.replace(/^\*\*\*$/, "[/icons/hr.icon]");
 
   //escape
 

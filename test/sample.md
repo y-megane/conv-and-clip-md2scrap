@@ -97,3 +97,13 @@ function greet() {
 [text](https://test-image-store.examle.com)
 
 [text](https://test-image-store.examle.com "title")
+
+# Horizontal Line
+
+line
+
+---
+
+line
+
+---

@@ -202,4 +202,13 @@ code:hello.js
       );
     });
   });
+  describe("Horizontal Line", () => {
+    test("--- to [/icons/hr.icon]", () => {
+      expect(md2scrap("---")).toBe("[/icons/hr.icon]");
+    });
+
+    test("*** to [/icons/hr.icon]", () => {
+      expect(md2scrap("---")).toBe("[/icons/hr.icon]");
+    });
+  });
 });

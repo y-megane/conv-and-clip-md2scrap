@@ -163,9 +163,43 @@ code:hello.js
 `);
   });
 
-  describe("image", () => {
-    test("[url]", () => {
-      expect(md2scrap("[url]")).toBe("!{xxxx}");
+  describe("Image", () => {
+    test("![alt](url title) to [url]", () => {
+      expect(
+        md2scrap('![alt](https://test-image-store.examle.com/test.png "title")')
+      ).toBe("[https://test-image-store.examle.com/test.png]");
+    });
+
+    test("![](url title) to [url]", () => {
+      expect(
+        md2scrap('![](https://test-image-store.examle.com/test.png "title")')
+      ).toBe("[https://test-image-store.examle.com/test.png]");
+    });
+
+    test("![alt](url) to [url]", () => {
+      expect(
+        md2scrap("![alt](https://test-image-store.examle.com/test.png)")
+      ).toBe("[https://test-image-store.examle.com/test.png]");
+    });
+
+    test("![](url) to [url]", () => {
+      expect(
+        md2scrap("![](https://test-image-store.examle.com/test.png)")
+      ).toBe("[https://test-image-store.examle.com/test.png]");
+    });
+  });
+
+  describe("Link", () => {
+    test("[text](url title) to [text url]", () => {
+      expect(
+        md2scrap('[text](https://test-image-store.examle.com "title")')
+      ).toBe("[text https://test-image-store.examle.com]");
+    });
+
+    test("[text](url) to [text url]", () => {
+      expect(md2scrap("[text](https://test-image-store.examle.com)")).toBe(
+        "[text https://test-image-store.examle.com]"
+      );
     });
   });
 });

@@ -80,8 +80,10 @@ function replace(mdText) {
   out = out.replace(/^[0-9]\. (\S.+)/, " $1");
 
   //image
+  out = out.replace(/!\[.*\]\((\S+)( "\S+")?\)/, "[$1]");
 
   //link
+  out = out.replace(/\[(.+)\]\((\S+)( "\S+")?\)/, "[$1 $2]");
 
   //horizontal line
 

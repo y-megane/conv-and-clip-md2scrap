@@ -81,3 +81,19 @@ function greet() {
   console.log("Hello");
 }
 ```
+
+# Image
+
+![alt](https://test-image-store.examle.com/test.png "title")
+
+![](https://test-image-store.examle.com/test.png "title")
+
+![alt](https://test-image-store.examle.com/test.png)
+
+![](https://test-image-store.examle.com/test.png)
+
+# Link
+
+[text](https://test-image-store.examle.com)
+
+[text](https://test-image-store.examle.com "title")

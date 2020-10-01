@@ -1,26 +1,39 @@
 //Convert markdown text to Scrapbox syntax
 function md2scrap(mdText) {
-  // console.log(mdText);
   const textArray = mdText.split(/\r\n|\r|\n/);
-  // console.log(textArray);
   let scrapArray = [];
   let isInCodeblock = false;
+  let isInTableBlock = false;
 
   for (const line of textArray) {
-    // console.log(line);
-    // console.log(replace(line));
     if (isInCodeblock) {
       if (isEndOfCodeBlock(line)) {
         isInCodeblock = false;
       } else {
         scrapArray.push(" " + line);
       }
+    } else if (isInTableBlock) {
+      if (RegExp(/\|(\s*:?-+:?\s*\|)+/).test(line)) {
+        continue;
+      }
+      if (isTableRow(line)) {
+        scrapArray.push(replaceTableRow(line));
+      } else {
+        isInTableBlock = false;
+        scrapArray.push(replace(line));
+      }
     } else {
       if (isStartOfCodeBlock(line)) {
         isInCodeblock = true;
         scrapArray.push(replaceCodeBlock(line));
+      } else if (isTableRow(line)) {
+        isInTableBlock = true;
+        scrapArray.push("table:table");
+        scrapArray.push(replaceTableRow(line));
       } else {
+        // Other general syntax.
         scrapArray.push(replace(line));
+        isInTableBlock = false;
       }
     }
   }
@@ -28,26 +41,38 @@ function md2scrap(mdText) {
 }
 
 function isStartOfCodeBlock(line) {
-  return line.match(/^```(.*)/);
+  return RegExp(/^```(.*)/).test(line);
 }
 
 function isEndOfCodeBlock(line) {
-  return line.match(/^```/);
+  return RegExp(/^```/).test(line);
+}
+
+function isTableRow(line) {
+  return RegExp(/^\|(.*\|).*\|$/).test(line);
 }
 
 function replaceCodeBlock(mdText) {
   // Code block WITHOUT extention or file name.
-  if (mdText.match(/^```$/)) {
+  if (RegExp(/^```$/).test(mdText)) {
     return "code:text";
   }
   // Code block WITH extention or file name.
   return mdText.replace(/```(.+:)?(.+)?/, "code:$2");
 }
 
+function replaceTableRow(mdText) {
+  console.log(mdText);
+  let scrapText = mdText.replace(/^\|\s*/, " ");
+  scrapText = scrapText.replace(/\s*\|\s*/, "\t");
+  console.log(scrapText);
+  return scrapText;
+}
+
 function replace(mdText) {
-  //header
   let out = mdText;
 
+  //Header
   //h1
   out = out.replace(/^# (.+)/, "[*** $1]");
   //h2
@@ -55,7 +80,7 @@ function replace(mdText) {
   //h3 or lower
   out = out.replace(/^###+ (.+)/, "[* $1]");
 
-  //font
+  //Font
   //bold
   out = out.replace(/(^|\s)\*\*(\S.+?)\*\*(\s|$)/, "$1[* $2]$3");
   //italic
@@ -64,9 +89,10 @@ function replace(mdText) {
   //strikethrough
   out = out.replace(/(^|\s)~(\S.+?)~(\s|$)/, "$1[- $2]$3");
 
-  //blockquotes
+  //Blockquotes
   // syntax is same. do nothing.
 
+  //List
   //unordered list
   out = out.replace(/^(  ){3}[*|-] (\S.+)/, "    $2");
   out = out.replace(/^(  ){2}[*|-] (\S.+)/, "   $2");
@@ -79,13 +105,13 @@ function replace(mdText) {
   out = out.replace(/^(  ){1}[0-9]\. (\S.+)/, "  $2");
   out = out.replace(/^[0-9]\. (\S.+)/, " $1");
 
-  //image
+  //Image
   out = out.replace(/!\[.*\]\((\S+)( "\S+")?\)/, "[$1]");
 
-  //link
+  //Link
   out = out.replace(/\[(.+)\]\((\S+)( "\S+")?\)/, "[$1 $2]");
 
-  //horizontal line
+  //Horizontal line
   out = out.replace(/^---$/, "[/icons/hr.icon]");
   out = out.replace(/^\*\*\*$/, "[/icons/hr.icon]");
 

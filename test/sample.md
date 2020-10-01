@@ -62,6 +62,18 @@ This is sample markdown text.
       1. Level3
 1. Level1
 
+# Table
+
+| header1 | header2 | header3 | header4 | header5 |
+| :------ | :-----: | ------: | ------- | ------- |
+| aaa     |   bbb   |     ccc |         | eee     |
+| AAA     |   BBB   |     CCC | DDD     |         |
+
+| header1 | header2 | header3 | header4 | header5 |
+| :------ | :-----: | ------: | ------- | ------- |
+| aaa     |   bbb   |     ccc |         | eee     |
+| AAA     |   BBB   |     CCC | DDD     |         |
+
 # Code Block
 
 ```js:hello.js

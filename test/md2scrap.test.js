@@ -1,7 +1,7 @@
 const md2scrap = require("../src/md2scrap");
 
 describe("header", () => {
-  test("# to [*** str]", () => {
+  test("# str to [*** str]", () => {
     expect(md2scrap("# h1 #text")).toBe("[*** h1 #text]");
   });
 
@@ -18,14 +18,14 @@ describe("header", () => {
   });
 });
 
-describe("font", () => {
-  test("bold", () => {
+describe("Font", () => {
+  test("**bold** to [* bold]", () => {
     expect(md2scrap("xxx **bold** xxx")).toBe("xxx [* bold] xxx");
   });
-  test("italic", () => {
+  test("*italic* to [/ italic]", () => {
     expect(md2scrap("xxx *italic* xxx")).toBe("xxx [/ italic] xxx");
   });
-  test("strikethrough", () => {
+  test("~strikethrough~ to [-strikethrough]", () => {
     expect(md2scrap("xxx ~strikethrough~ xxx")).toBe(
       "xxx [- strikethrough] xxx"
     );
@@ -52,7 +52,7 @@ describe("blockquotes", () => {
   });
 });
 
-//Up to level4 is implemented.
+//Up to level 4 item is supported.
 describe("Unordered list", () => {
   test("Unordered List with -", () => {
     expect(
@@ -111,6 +111,24 @@ describe("Ordered list", () => {
   });
 });
 
+describe("Table", () => {
+  test("Table", () => {
+    expect(
+      md2scrap(`
+|header1| header2 | header3 | header4 | header5 |
+|:-| :-: | --: |-| ------- |
+|aaa     |   bbb   |     ccc |         | eee     |
+|    AAA|BBB|     CCC | DDD     |         |
+`)
+    ).toBe(`
+table:table
+ header1\theader2\theader3\theader4\theader5
+ aaa\tbbb\tccc\t\teee
+ AAA\tBBB\tCCC\tDDD\t\t
+`);
+  });
+});
+
 describe("Code block", () => {
   test("Code block without extention or file name", () => {
     expect(
@@ -162,53 +180,54 @@ code:hello.js
  }
 `);
   });
+});
 
-  describe("Image", () => {
-    test("![alt](url title) to [url]", () => {
-      expect(
-        md2scrap('![alt](https://test-image-store.examle.com/test.png "title")')
-      ).toBe("[https://test-image-store.examle.com/test.png]");
-    });
-
-    test("![](url title) to [url]", () => {
-      expect(
-        md2scrap('![](https://test-image-store.examle.com/test.png "title")')
-      ).toBe("[https://test-image-store.examle.com/test.png]");
-    });
-
-    test("![alt](url) to [url]", () => {
-      expect(
-        md2scrap("![alt](https://test-image-store.examle.com/test.png)")
-      ).toBe("[https://test-image-store.examle.com/test.png]");
-    });
-
-    test("![](url) to [url]", () => {
-      expect(
-        md2scrap("![](https://test-image-store.examle.com/test.png)")
-      ).toBe("[https://test-image-store.examle.com/test.png]");
-    });
+describe("Image", () => {
+  test("![alt](url title) to [url]", () => {
+    expect(
+      md2scrap('![alt](https://test-image-store.examle.com/test.png "title")')
+    ).toBe("[https://test-image-store.examle.com/test.png]");
   });
 
-  describe("Link", () => {
-    test("[text](url title) to [text url]", () => {
-      expect(
-        md2scrap('[text](https://test-image-store.examle.com "title")')
-      ).toBe("[text https://test-image-store.examle.com]");
-    });
-
-    test("[text](url) to [text url]", () => {
-      expect(md2scrap("[text](https://test-image-store.examle.com)")).toBe(
-        "[text https://test-image-store.examle.com]"
-      );
-    });
+  test("![](url title) to [url]", () => {
+    expect(
+      md2scrap('![](https://test-image-store.examle.com/test.png "title")')
+    ).toBe("[https://test-image-store.examle.com/test.png]");
   });
-  describe("Horizontal Line", () => {
-    test("--- to [/icons/hr.icon]", () => {
-      expect(md2scrap("---")).toBe("[/icons/hr.icon]");
-    });
 
-    test("*** to [/icons/hr.icon]", () => {
-      expect(md2scrap("---")).toBe("[/icons/hr.icon]");
-    });
+  test("![alt](url) to [url]", () => {
+    expect(
+      md2scrap("![alt](https://test-image-store.examle.com/test.png)")
+    ).toBe("[https://test-image-store.examle.com/test.png]");
+  });
+
+  test("![](url) to [url]", () => {
+    expect(md2scrap("![](https://test-image-store.examle.com/test.png)")).toBe(
+      "[https://test-image-store.examle.com/test.png]"
+    );
+  });
+});
+
+describe("Link", () => {
+  test("[text](url title) to [text url]", () => {
+    expect(
+      md2scrap('[text](https://test-image-store.examle.com "title")')
+    ).toBe("[text https://test-image-store.examle.com]");
+  });
+
+  test("[text](url) to [text url]", () => {
+    expect(md2scrap("[text](https://test-image-store.examle.com)")).toBe(
+      "[text https://test-image-store.examle.com]"
+    );
+  });
+});
+
+describe("Horizontal Line", () => {
+  test("--- to [/icons/hr.icon]", () => {
+    expect(md2scrap("---")).toBe("[/icons/hr.icon]");
+  });
+
+  test("*** to [/icons/hr.icon]", () => {
+    expect(md2scrap("---")).toBe("[/icons/hr.icon]");
   });
 });

@@ -62,10 +62,10 @@ function replaceCodeBlock(mdText) {
 }
 
 function replaceTableRow(mdText) {
-  console.log(mdText);
-  let scrapText = mdText.replace(/^\|\s*/, " ");
-  scrapText = scrapText.replace(/\s*\|\s*/, "\t");
-  console.log(scrapText);
+  let scrapText = mdText
+    .replace(/^\|\s*/, " ")
+    .replace(/\s*\|$/, "")
+    .replace(/\s*\|\s*\.*/g, "\t");
   return scrapText;
 }
 

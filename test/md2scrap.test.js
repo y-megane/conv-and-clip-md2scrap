@@ -118,7 +118,7 @@ describe("Table", () => {
 |header1| header2 | header3 | header4 | header5 |
 |:-| :-: | --: |-| ------- |
 |aaa     |   bbb   |     ccc |         | eee     |
-|    AAA|BBB|     CCC | DDD     |         |
+|   AAA|BBB|     CCC | DDD     |         |         |
 `)
     ).toBe(`
 table:table

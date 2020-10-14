@@ -116,8 +116,13 @@ function replace(mdText) {
   out = out.replace(/^\*\*\*$/, "[/icons/hr.icon]");
 
   //escape
+  out = out.replace(/^\\#/, "#");
+  out = out.replace(/^\\>/, ">");
+  out = out.replace(/^\s*\\([*-])/, "$1");
+  out = out.replace(/^\\\\/, "\\");
+  out = out.replace(/^\\`/, "`");
 
   return out;
 }
 
-module.exports = md2scrap;
+// module.exports = md2scrap;

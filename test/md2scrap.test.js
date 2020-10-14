@@ -222,12 +222,48 @@ describe("Link", () => {
   });
 });
 
-describe("Horizontal Line", () => {
-  test("--- to [/icons/hr.icon]", () => {
-    expect(md2scrap("---")).toBe("[/icons/hr.icon]");
+describe("Escape", () => {
+  test("escape", () => {
+    expect(
+      md2scrap(`
+\\# sharp
+\\> blockquote
+\\\\ backslash
+\\- list
+\\* item
+\\\`\`\` codeblock`)
+    ).toBe(`
+# sharp
+> blockquote
+\\ backslash
+- list
+* item
+\`\`\` codeblock`);
   });
+});
 
-  test("*** to [/icons/hr.icon]", () => {
-    expect(md2scrap("---")).toBe("[/icons/hr.icon]");
+describe("Combination", () => {
+  test("sample1", () => {
+    expect(
+      md2scrap(`
+# H1
+first line text.
+second line text.
+## H2
+- list1
+  - list1-1
+  - list1-2
+- list2
+`)
+    ).toBe(`
+[*** H1]
+first line text.
+second line text.
+[** H2]
+ list1
+  list1-1
+  list1-2
+ list2
+`);
   });
 });

@@ -119,3 +119,12 @@ line
 line
 
 ---
+
+# Escape
+
+\# sharp  
+\> blockquote  
+\\ backslash  
+\- list  
+\* item  
+\``` codeblock
